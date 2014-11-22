@@ -1,0 +1,33 @@
+{
+  "name": "iso-bmff",
+  "version": "1.0.1",
+  "description": "Parse an ISO BMFF using nodejs",
+  "main": "index.js",
+  "dependencies": {
+    "bitparser": "^0.1.1"
+  },
+  "devDependencies": {
+    "grunt-release": "latest",
+    "grunt": "latest"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/necccc/iso-bmff-parser-stream.git"
+  },
+  "keywords": [
+    "iso",
+    "bmff",
+    "mpeg",
+    "binary",
+    "boxes"
+  ],
+  "author": "nec@shell8.net",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/necccc/iso-bmff-parser-stream/issues"
+  },
+  "homepage": "https://github.com/necccc/iso-bmff-parser-stream"
+}

@@ -3,15 +3,32 @@ iso-bmff-parser-stream
 
 Parse an ISO BMFF using nodejs
 
-work in progress 
+Returns a structured javascript object of iso-bmff boxes
 
-## planned usage
+**work in progress**
 
-var isobmff = require('iso-bmff')
-var media = require('fs').createReadStream('movie.mp4')
+## usage
 
-media.on('end', function(data) {
-  console.log(data.boxes.moof.traf.tfdt)
-}
+```
+var chunkFile = './media/audio.m4s'
 
-media.pipe(isobmff)
+var fs = require('fs');
+var isoBmff = require('../index.js');
+
+var chunkStream = fs.createReadStream(chunkFile, {
+	flags: 'r',
+	encoding: null,
+	fd: null,
+	mode: 0666,
+	autoClose: true
+});
+
+var unboxing = new isoBmff(function (err, data) {
+	console.log(data.root.moof.traf );
+})
+
+
+chunkStream
+	.pipe(unboxing);
+
+```

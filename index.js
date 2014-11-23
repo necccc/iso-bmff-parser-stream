@@ -1,6 +1,6 @@
 var util = require('util');
 var bitparser = require('bitparser');
-var Transform = require('stream').Transform;
+var Writable = require('stream').Writable;
 
 var isobmff = require('./isobmff.json');
 
@@ -78,11 +78,18 @@ function bufferBoxParser (buf, parent, output) {
  * @param options
  * @constructor
  */
-var BinaryTransformStream = function (options) {
-	Transform.call(this, {objectMode: true});
+var UnboxingWriteStream = function (endCallback) {
+	Writable.call(this, {objectMode: true});
+
+	this.endCallback = endCallback;
+
+	this.on('finish', this.onEnd.bind(this))
+
 }
 
-util.inherits(BinaryTransformStream, Transform);
+util.inherits(UnboxingWriteStream, Writable);
+
+UnboxingWriteStream.prototype.boxes = [];
 
 /**
  *
@@ -92,14 +99,14 @@ util.inherits(BinaryTransformStream, Transform);
  *
  * @private
  */
-BinaryTransformStream.prototype._transform = function(data, enc, done) {
+UnboxingWriteStream.prototype._write = function(data, enc, done) {
 
 	if (this.currentBoxFragment) {
 		this.currentBoxFragment.currentLength += data.length;
 		this.currentBoxFragment.data = Buffer.concat([this.currentBoxFragment.data, data]);
 
 		if(this.currentBoxFragment.currentLength === this.currentBoxFragment.length) {
-			this.push(this.currentBoxFragment);
+			this.boxes.push(this.currentBoxFragment);
 			this.currentBoxFragment = null;
 		}
 
@@ -107,7 +114,7 @@ BinaryTransformStream.prototype._transform = function(data, enc, done) {
 		return;
 	}
 
-	var boxFragment = bufferBoxParser(data, null, this.push.bind(this));
+	var boxFragment = bufferBoxParser(data, null, this.boxes.push.bind(this.boxes));
 
 	if (boxFragment) {
 		this.currentBoxFragment = boxFragment;
@@ -116,4 +123,9 @@ BinaryTransformStream.prototype._transform = function(data, enc, done) {
 	done();
 };
 
-module.exports = BinaryTransformStream;
+UnboxingWriteStream.prototype.onEnd = function () {
+
+	this.endCallback(null, this.boxes);
+}
+
+module.exports = UnboxingWriteStream;

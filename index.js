@@ -34,9 +34,17 @@ UnboxingWriteStream.prototype._write = function(data, enc, done) {
 
 	if (this.currentBoxFragment) {
 		this.currentBoxFragment.currentLength += data.length;
+
+
+
+console.log(this.currentBoxFragment.currentLength, this.currentBoxFragment.length );
+
+
+		// itt csak annyit konkatenaljunk amennyi visszavan es kell
 		this.currentBoxFragment.data = Buffer.concat([this.currentBoxFragment.data, data]);
 
-		if(this.currentBoxFragment.currentLength === this.currentBoxFragment.length) {
+		// ha ez megvan, akkor a maradek mehet tovabb a boxparsernek
+		if (this.currentBoxFragment.currentLength === this.currentBoxFragment.length) {
 			this.boxes.push(this.currentBoxFragment);
 			this.currentBoxFragment = null;
 		}

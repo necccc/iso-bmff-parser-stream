@@ -1,6 +1,6 @@
 
 
-var chunkFile = './media/audio.m4s'
+var chunkFile = './media/video.m4s'
 
 var fs = require('fs');
 var isoBmff = require('../index.js');
@@ -14,7 +14,8 @@ var chunkStream = fs.createReadStream(chunkFile, {
 });
 
 var unboxing = new isoBmff(function (err, data) {
-	console.log(data.root.moof.traf );
+	console.log(data);
+	//console.log(data.root.moof.traf );
 })
 
 

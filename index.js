@@ -32,35 +32,55 @@ UnboxingWriteStream.prototype.boxes = [];
  */
 UnboxingWriteStream.prototype._write = function(data, enc, done) {
 
-	if (this.currentBoxFragment) {
-		this.currentBoxFragment.currentLength += data.length;
+//	console.log('--- [data] - [', data.length , '] --------------' );
 
 
+	// TODO, ha a boxfrag vege egy boxContainerben van
+	//       akkor jo lenne a parent kezelest tovabb vinni
 
-console.log(this.currentBoxFragment.currentLength, this.currentBoxFragment.length );
+	if (this.boxFrag) {
 
+		var dataToConcat = data;
+
+		if (this.boxFrag.currentLength + dataToConcat.length > this.boxFrag.length ) {
+			var remainingBuffer = this.boxFrag.currentLength + data.length - this.boxFrag.length
+			dataToConcat = data.slice(0, data.length - remainingBuffer)
+			var dataRemains = data.slice( data.length - remainingBuffer)
+		}
+
+		this.boxFrag.currentLength += dataToConcat.length;
 
 		// itt csak annyit konkatenaljunk amennyi visszavan es kell
-		this.currentBoxFragment.data = Buffer.concat([this.currentBoxFragment.data, data]);
+		this.boxFrag.data = Buffer.concat([this.boxFrag.data, dataToConcat]);
 
 		// ha ez megvan, akkor a maradek mehet tovabb a boxparsernek
-		if (this.currentBoxFragment.currentLength === this.currentBoxFragment.length) {
-			this.boxes.push(this.currentBoxFragment);
-			this.currentBoxFragment = null;
+		if (this.boxFrag.currentLength === this.boxFrag.length) {
+			this.boxes.push(this.boxFrag);
+			this.boxFrag = null;
+		}
+
+		if (dataRemains && dataRemains.length > 0) {
+			this.parseBox(dataRemains);
 		}
 
 		done();
-		return;
-	}
 
-	var boxFragment = boxParser(data, 'root', this.boxes.push.bind(this.boxes));
+	} else {
+
+		this.parseBox(data);
+
+
+		done();
+	}
+};
+
+UnboxingWriteStream.prototype.parseBox = function (data) {
+	var boxFragment = boxParser(data, 0, this.boxes.push.bind(this.boxes));
 
 	if (boxFragment) {
-		this.currentBoxFragment = boxFragment;
+		this.boxFrag = boxFragment;
 	}
-
-	done();
-};
+}
 
 
 UnboxingWriteStream.prototype.onEnd = function () {

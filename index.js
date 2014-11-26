@@ -32,12 +32,6 @@ UnboxingWriteStream.prototype.boxes = [];
  */
 UnboxingWriteStream.prototype._write = function(data, enc, done) {
 
-//	console.log('--- [data] - [', data.length , '] --------------' );
-
-
-	// TODO, ha a boxfrag vege egy boxContainerben van
-	//       akkor jo lenne a parent kezelest tovabb vinni
-
 	if (this.boxFrag) {
 
 		var dataToConcat = data;

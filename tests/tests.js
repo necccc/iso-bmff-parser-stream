@@ -1,6 +1,8 @@
 
 
-var chunkFile = './media/video.m4s'
+//var chunkFile = './media/video.m4s'
+//var chunkFile = './media/audio.m4s'
+var chunkFile = './media/video_dashinit.mp4';
 
 var fs = require('fs');
 var isoBmff = require('../index.js');
@@ -14,17 +16,11 @@ var chunkStream = fs.createReadStream(chunkFile, {
 });
 
 var unboxing = new isoBmff(function (err, data) {
-//	console.log(data);
-	//console.log(data.root.moof.traf );
-})
 
+	console.dir(JSON.stringify(data));
+
+	//console.log(data.root.moof.traf );
+});
 
 chunkStream
 	.pipe(unboxing);
-
-
-
-
-
-
-

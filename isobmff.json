@@ -1,6 +1,24 @@
 {
   "boxContainers": [
+    "avc1",
+    "dinf",
+    "edts",
+    "ilst",
+    "mdia",
+
+    "minf",
+    "moov",
     "moof",
-    "traf"
+    "mvex",
+    "stbl",
+
+    "traf",
+    "trak",
+    "udta"
+  ],
+  "needParseInfo": [
+    "dref",
+    "meta",
+    "stsd"
   ]
 }

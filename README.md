@@ -7,6 +7,12 @@ Returns a structured javascript object of iso-bmff boxes
 
 **This is still a work in progress !**
 
+## Installation
+
+```
+npm install iso-bmff
+```
+
 ## How to use
 
 ```

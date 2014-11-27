@@ -32,7 +32,7 @@ var chunkStream = fs.createReadStream(chunkFile, {
 	autoClose: true
 });
 
-var unboxing = new isoBmff(function (err, data) {
+var unboxing = new isoBmff.Parser(function (err, data) {
 	console.dir(JSON.stringify(data));
 })
 

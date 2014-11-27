@@ -1,9 +1,12 @@
 iso-bmff-parser-stream
 ======================
 
-Parse an ISO BMFF using nodejs
+Parse an ISO BMFF using nodejs.
 
-Returns a structured javascript object of iso-bmff boxes
+Returns a structured javascript object of iso-bmff boxes.
+
+
+What is ISO-BMFF: [tldr version](http://en.wikipedia.org/wiki/ISO_base_media_file_format), [full version](http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=61988)
 
 **This is still a work in progress !**
 

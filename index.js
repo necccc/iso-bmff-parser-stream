@@ -1,7 +1,7 @@
 var util = require('util');
 var Writable = require('stream').Writable;
 var unflat = require('./lib/unflat.js');
-var boxParser = require('./lib/boxParser.js');
+var unbox = require('./lib/unbox.js');
 
 
 /**
@@ -69,7 +69,7 @@ UnboxingWriteStream.prototype._write = function(data, enc, done) {
 };
 
 UnboxingWriteStream.prototype.parseBox = function (data) {
-	var boxFragment = boxParser(data, 0, this.boxes.push.bind(this.boxes));
+	var boxFragment = unbox(data, 0, this.boxes.push.bind(this.boxes));
 
 	if (boxFragment) {
 		this.boxFrag = boxFragment;

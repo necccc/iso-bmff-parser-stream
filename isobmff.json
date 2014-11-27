@@ -20,5 +20,19 @@
     "dref",
     "meta",
     "stsd"
-  ]
+  ],
+  "parseInfo": {
+    "tfdt": {
+      "version": {
+        "length": 8
+      },
+      "flags": {
+        "length": 24
+      },
+      "baseMediaDecodeTime": {
+        "length": 32,
+        "type": "decimal"
+      }
+    }
+  }
 }

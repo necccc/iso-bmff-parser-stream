@@ -1,6 +1,6 @@
 {
   "name": "iso-bmff",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Parse an ISO BMFF using nodejs",
   "main": "index.js",
   "dependencies": {

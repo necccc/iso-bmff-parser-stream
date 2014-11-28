@@ -4,6 +4,7 @@
   "description": "Parse an ISO BMFF using nodejs",
   "main": "index.js",
   "dependencies": {
+    "intobuffer": "latest",
     "bitparser": "^0.1.1",
     "lodash": "latest"
   },

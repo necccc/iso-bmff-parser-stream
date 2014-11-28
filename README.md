@@ -191,3 +191,7 @@ Every box can have it's own parser module,
 to analyze and parse box binary data, and return something meaningful. Every box has at least two methods, one for **parse** and one for **rebuild**, so box data parse/build logic can be contained in small modules.
 
 See the [lib/box](https://github.com/necccc/iso-bmff-parser-stream/tree/master/lib/box) folder for these modules, and currently supported box types.
+
+## Contributions welcome
+
+If you know how a box should be parsed, create a parser module, and send a pull rq. Thanks!

@@ -18,6 +18,8 @@ npm install iso-bmff
 
 ## How to use
 
+### Parse a media file
+
 ```
 var chunkFile = './media/audio.m4s'
 
@@ -151,9 +153,41 @@ Output is something like this
 ]
 ```
 
+### Build a media file from generated output
+
+`iso-bmff` can re-generate media files, from it's output. This is handy, if you want to modify something in a media file, and generate it again
+
+```
+var chunkFile = './media/video.m4s'
+
+var fs = require('fs');
+var isoBmff = require('iso-bmff');
+
+var chunkStream = fs.createReadStream(chunkFile, {
+	flags: 'r',
+	encoding: null,
+	fd: null,
+	mode: 0666,
+	autoClose: true
+});
+
+var unboxing = new isoBmff.Parser(parseDone);
+
+chunkStream
+	.pipe(unboxing);
+
+function parseDone (err, data) {
+	new isoBmff.Builder(data, buildDone);
+}
+
+function buildDone (err, data) {
+	fs.writeFile(chunkFile.replace('media/', ''), data);
+}
+```
+
 ## Extend with boxes
 
 Every box can have it's own parser module, 
-to analyze and parse box binary data, and return something meaningful.
+to analyze and parse box binary data, and return something meaningful. Every box has at least two methods, one for **parse** and one for **rebuild**, so box data parse/build logic can be contained in small modules.
 
 See the [lib/box](https://github.com/necccc/iso-bmff-parser-stream/tree/master/lib/box) folder for these modules, and currently supported box types.

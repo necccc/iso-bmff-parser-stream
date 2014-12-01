@@ -10,6 +10,8 @@ var unbox = require('./lib/unbox.js');
  * @constructor
  */
 var ParseStream = function (endCallback) {
+	this.boxes = [];
+
 	Writable.call(this, {objectMode: true});
 
 	this.endCallback = endCallback;
@@ -20,7 +22,6 @@ var ParseStream = function (endCallback) {
 
 util.inherits(ParseStream, Writable);
 
-ParseStream.prototype.boxes = [];
 
 /**
  *

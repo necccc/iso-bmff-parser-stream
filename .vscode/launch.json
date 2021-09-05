@@ -1,0 +1,23 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "pwa-node",
+			"request": "launch",
+			"name": "Run Parse Test",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"outputCapture": "std",
+            "cwd": "${workspaceFolder}/tests/",
+			"program": "${workspaceFolder}/tests/parse.js",
+			"args": [
+				"> ",
+				"/users/lrosenth/OUTPUT/out.json"
+			]
+		}
+	]
+}

@@ -17,9 +17,11 @@ var chunkStream = fs.createReadStream(chunkFile, {
 
 var unboxing = new isoBmff.Parser(function (err, data) {
 
-	console.dir(JSON.stringify(data));
 
 	//console.log(data.root.moof.traf );
+
+	// console.dir(JSON.stringify(data));
+	console.log(JSON.stringify(data));
 });
 
 chunkStream
